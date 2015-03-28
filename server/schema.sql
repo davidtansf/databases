@@ -19,9 +19,9 @@ USE chat;
 DROP TABLE IF EXISTS `users`;
     
 CREATE TABLE `users` (
-  `userId` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
-  `userName` VARCHAR(30) NULL DEFAULT NULL,
-  PRIMARY KEY (`userId`)
+  `user_id` INTEGER NOT NULL AUTO_INCREMENT,
+  `user_name` VARCHAR(30) NOT NULL,
+  PRIMARY KEY (`user_id`)
 );
 
 -- ---
@@ -29,13 +29,13 @@ CREATE TABLE `users` (
 -- 
 -- ---
 
-DROP TABLE IF EXISTS `rooms`;
+-- DROP TABLE IF EXISTS `rooms`;
     
-CREATE TABLE `rooms` (
-  `roomId` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
-  `roomName` VARCHAR(30) NULL DEFAULT NULL,
-  PRIMARY KEY (`roomId`)
-);
+-- CREATE TABLE `rooms` (
+--   `room_id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
+--   `roomName` VARCHAR(30) NULL DEFAULT NULL,
+--   PRIMARY KEY (`roomId`)
+-- );
 
 -- ---
 -- Table 'messages'

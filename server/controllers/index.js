@@ -10,43 +10,42 @@ module.exports = {
       console.log("GET MESSAGE: ",req.url);
 
       models.messages.get(function(messages) {
+        console.log("Rows: ", rows, "\nFields: ", fields);
         res.writeHead(200);
-        res.end("hello");
+        res.end(JSON.stringify(messages));
       });
 
     }, // a function which handles a get request for all messages
     post: function (req, res) {
       console.log("POST MESSAGE: ",req.body);
       
-      var requestBody = '';
-      req.on('data', function(data) {
-        requestBody += data;  
+      models.messages.post(req.body, function(rows, fields){
+        console.log("Rows: ", rows, "\nFields: ", fields);
       });
-      req.on('end', function() {
-        models.messages.post(JSON.parse(requestBody));
-      });
+      res.writeHead(204);
+      res.end();
     } // a function which handles posting a message to the database
-
   },
 
   users: {
     get: function (req, res) {
       console.log("GET USER: ",req.url);
 
-      models.users.get(function(messages) {
+      models.users.get(function(user) {
+        console.log("Rows: ", rows, "\nFields: ", fields);
         res.writeHead(200);
-        res.end("hello");
+        res.end(JSON.stringify(user));
       });
+      res.end();
     },
     post: function (req, res) {
       console.log("POST USER: ",req.body)
-      //var requestBody = '';
-      //req.on('data', function(data) {
-      //  requestBody += data;  
-      //});
-      //req.on('end', function() {
-      models.users.post(req.body);
-      //});
+
+      models.users.post(req.body, function(rows){
+        console.log("Rows: ", rows);
+      });
+      res.writeHead(204);
+      res.end();
     }
   }
 };

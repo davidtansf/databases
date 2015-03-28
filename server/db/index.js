@@ -5,45 +5,12 @@ var mysql = require('mysql');
 // You will need to connect with the user "root", no password,
 // and to the database "chat".
 
-module.exports = {
+var dbConnection = mysql.createConnection({
+  user: "root",
+  password: "",
+  database: "chat"
+});
 
-  getMessages: function(callback){
-    this.query('SELECT * FROM messages', function(rows, fields) {
-      callback(rows);
-    });
-  },
+dbConnection.connect();
 
-  postMessage: function(msgObj, callback) {
-    this.query('INSERT into messages (messages) values ('+msgObj+')', function(rows, fields) {
-      callback(rows);
-    });
-  },
-
-  addUser: function(msgObj, callback){
-    console.log(msgObj.username);
-    this.query('INSERT into users(username) values ('+msgObj.username+')', function(rows, fields) {
-      callback(rows);
-    });
-  },
-
-  query: function(query, callback){
-    var dbConnection = mysql.createConnection({
-      user: "root",
-      password: "",
-      database: "chat"
-    });
-
-    dbConnection.connect();
-
-    dbConnection.query( query , function(err, rows, fields) {
-      if (err) {
-        throw err
-      }  
-      callback(rows, fields);
-    });
-    dbConnection.end();
-  }
-
-
-
-}
+module.exports = dbConnection;

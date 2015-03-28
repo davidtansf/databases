@@ -10,9 +10,8 @@ module.exports = {
       console.log("GET MESSAGE: ",req.url);
 
       models.messages.get(function(messages) {
-        console.log("Rows: ", rows, "\nFields: ", fields);
         res.writeHead(200);
-        res.end(JSON.stringify(messages));
+        res.end(JSON.stringify({results:messages}));
       });
 
     }, // a function which handles a get request for all messages

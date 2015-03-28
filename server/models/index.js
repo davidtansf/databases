@@ -6,7 +6,9 @@ var db = require('../db/index.js');
 module.exports = {
   messages: {
     get: function(callback){
-      db.query('SELECT * FROM messages', function(err, rows, fields) {
+      db.query('SELECT messages.message, users.user_name FROM \
+        messages left outer join users on (messages.userId = users.user_id) \
+        order by messages.messageId ASC', function(err, rows, fields) {
         if (err) {
           throw err
         }  
@@ -16,12 +18,16 @@ module.exports = {
 
     post: function(msgObj, callback) {
       // console.log("Database Posting Message:", msgObj);
-      var qry = "INSERT INTO messages (message,userId) VALUES \
-                (?, (select user_id from users where user_name = ?))";
+      module.exports.users.post(msgObj, function(){
 
-      db.query(qry, [msgObj.message, msgObj.username], function(rows, fields) {
-        callback(rows, fields);
+        var qry = "INSERT INTO messages (message,userId) VALUES \
+                  (?, (select user_id from users where user_name = ?))";
+
+        db.query(qry, [msgObj.message, msgObj.username], function(rows, fields) {
+          callback(rows, fields);
+        });
       });
+      
     },
   },
 
@@ -42,6 +48,8 @@ module.exports = {
           db.query(str, [msgObj.username], function(err, data) {
             callback(data);
           });
+        }else{
+          callback();
         }
       })
     }

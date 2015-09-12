@@ -130,7 +130,7 @@ var postData = function(message, username) {
 getData();
 
 //update mechanism
-setInterval(getData, 1000);
+setInterval(getData, 7000);
 
 
 $(".submit").on('submit',function(event) {
@@ -140,7 +140,7 @@ $(".submit").on('submit',function(event) {
   $('.title').text('Chat with JSON');
 
   postData($(".userInput").val(), username);
-  
+
   //clear out the user input after sending data
   $(".userInput").val("");
   $(".usernameInput").val("");
